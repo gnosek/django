@@ -68,10 +68,10 @@ class ResolverMatch(object):
             self.func, self.args, self.kwargs, self.url_name, self.app_name, self.namespace)
 
 
-class Resolver404(Http404):
+class Resolver404(Exception):
 
     def __init__(self, path, tried=None):
-        super(Resolver404, self).__init__()
+        super(Resolver404, self).__init__("Failed to find a handler for URL %s" % path)
         self.path = path
         self.tried = tried
 

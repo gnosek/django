@@ -97,7 +97,10 @@ class BaseHandler(object):
                     urlresolvers.set_urlconf(urlconf)
                     resolver = urlresolvers.RegexURLResolver(r'^/', urlconf)
 
-                resolver_match = resolver.resolve(request.path_info)
+                try:
+                    resolver_match = resolver.resolve(request.path_info)
+                except urlresolvers.Resolver404:
+                    raise http.Http404
                 callback, callback_args, callback_kwargs = resolver_match
                 request.resolver_match = resolver_match
 
